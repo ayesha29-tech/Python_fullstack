@@ -8,3 +8,6 @@ console.log("Message element:", msg)
 function showmessage(){
     alert("Welcome to NRIIT Learning Management System")
 }
+function changeHeading(){
+    document.getElementById("welcome").innerHTML = "Welcome Python Fullstack Developers"
+}
