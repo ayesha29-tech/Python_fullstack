@@ -31,5 +31,5 @@ registerForm.addEventListener("submit", function(event){
 
     console.log("Name: ",name);
     console.log("Email: ",email);
-    console.log("Password: ",password);
-})
+    console.log("Password: ",password);});
+
