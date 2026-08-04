@@ -33,6 +33,7 @@ def register():
         gender=request.form["gender"]
         course=request.form["course"]
         name=request.form["name"]
+        return render template('regiter.html')
 
 if __name__=='__main__':
     app.run(debug= True)
