@@ -60,3 +60,20 @@ ill -912345
 404 Not Found
 500 Internet Server Error
 503 Service Unavailable
+
+# Projects
+event management system
+job portal
+complaint management system
+online voting system
+
+#should use html css javascript python backend frame work flask sqlite database
+app should contain
+login
+register
+crud apid
+database connections
+frontend backend integration
+rest api
+should contain static folders js css images DOM
+requrements.txt
