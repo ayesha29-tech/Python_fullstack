@@ -1,39 +1,41 @@
-from flask import Flask,render_template, 
+
+#pyrefly: ignore
+from flask import Flask,render_template,jsonify,request
 
 app = Flask(__name__)
 
+users_db={}
 
 @app.route('/')
 def home():
-    return render_teplate("index.html")
+    return render_template("index.html")
 
-@app.route("/about")
+@app.route('/about')
 def about():
     return render_template("about.html")
 
-@app.route("/contact")
+@app.route('/contact')
 def contact():
     return render_template("contact.html")
 
-@app.route("/courses")
+@app.route('/courses')
 def courses():
     return render_template("courses.html")
 
-@app.route("/trainers")
-def tainers():
+@app.route('/trainers')
+def trainers():
     return render_template("trainers.html")
 
-@app.route('/register')
+@app.route('/register',methods=["POST","GET"])
 def register():
-    if requst.method == "POST":
+    if request.method=="POST":
         name=request.form["name"]
         email=request.form["email"]
         password=request.form["password"]
         dob=request.form["dob"]
         gender=request.form["gender"]
         course=request.form["course"]
-        name=request.form["name"]
-        return render template('regiter.html')
-
-if __name__=='__main__':
-    app.run(debug= True)
+        return render_template("register.html")
+    return render_template("register.html")
+if __name__ == '__main__':
+    app.run(debug=True)
