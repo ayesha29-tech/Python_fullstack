@@ -66,6 +66,22 @@ event management system
 job portal
 complaint management system
 online voting system
+student management sys
+employee mgmt sys
+hospital mgmt sys
+school mgmt sys
+college mgmt sys
+quiz application 
+notes mgmt sys
+attendance mgmt sys
+leave mgmt sys
+inventory mgmt sys
+hotel mgmt sys
+restaurant ordering sys
+food delivery sys
+e-commerce store
+
+
 
 #should use html css javascript python backend frame work flask sqlite database
 app should contain
