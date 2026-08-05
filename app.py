@@ -57,5 +57,17 @@ def api_register():
     users_db[email]=data
     return jsonify({"status": "success", "message":"Registration successful!"})
 
+@app.route('/api/login', methods=["POST"])
+def api_login():
+    data = request.get_json()
+    email = data.get("email")
+    password = data.get("password")
+
+    user = users_db.get(email)
+    if user and user.get("password") == password:
+        return jsonify({"status": "success", "message" : "Login succesful! Welcome back."})
+    else:
+        return jsonify({"status":"error", "message":"Invalid email password!"})
+        
 if __name__ == '__main__':
     app.run(debug=True)
