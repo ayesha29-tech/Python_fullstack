@@ -200,38 +200,3 @@ if (btnPrevPopular) {
         updatePopularCourse();
     });
 }
-function showmessage() {
-    alert("Welcome to NRIIT Learning Management System");
-}
-
-function changeHeading() {
-    const heading = document.getElementById("welcome");
-    if (heading) {
-        if (heading.textContent === "Welcome to NRIIT Learning Management System") {
-            heading.textContent = "Get ready to learn and grow with NRIIT!";
-        } else {
-            heading.textContent = "Welcome to NRIIT Learning Management System";
-        }
-    }
-}
-
-document.addEventListener("DOMContentLoaded", function () {
-    let btnClickMe = document.getElementById("btnClickMe");
-    if (btnClickMe) {
-        btnClickMe.addEventListener("click", showmessage);
-    }
-
-    let btnChangeHeading = document.getElementById("btnChangeHeading");
-    if (btnChangeHeading) {
-        btnChangeHeading.addEventListener("click", changeHeading);
-    }
-
-
-    let btnGreeting = document.getElementById("btnGreeting");
-    if (btnGreeting) {
-        btnGreeting.addEventListener("click", showmessage);
-    }
-
-    // Show the welcome popup when the page loads.
-    showmessage();
-});
