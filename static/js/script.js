@@ -200,3 +200,26 @@ if (btnPrevPopular) {
         updatePopularCourse();
     });
 }
+//Task Management crud functions
+function getTasks(){
+    fetch('/api/tasks',{
+        method: 'GET',
+        headers: {'Content-Type': 'application/json'}
+    })
+    //promise which is async code, .then() which is sync code
+    // .then() is used to handle the response from the server(backend) and then it will execute 
+    .then(response => Response.json())
+    // data is the response from the server, which is converted to json format
+    .then(data => {
+        if (data.status === 'success'){
+            let tasksLists = document.getElementById("taskList");
+            let tasksHTML = " ";
+            for (let i = 0; i < data.tasks.length; i++){
+                tasksHTML += "<li>" + data.tasks[i].title + "/<li>";
+            }
+            tasksLists.innerHTML = tasksHTML;
+        }
+    })
+    .catch(error => console.error('Error:',error));
+}
+getTasks();
