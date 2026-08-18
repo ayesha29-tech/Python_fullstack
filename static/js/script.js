@@ -200,26 +200,102 @@ if (btnPrevPopular) {
         updatePopularCourse();
     });
 }
-//Task Management crud functions
-function getTasks(){
-    fetch('/api/tasks',{
-        method: 'GET',
-        headers: {'Content-Type': 'application/json'}
-    })
-    //promise which is async code, .then() which is sync code
-    // .then() is used to handle the response from the server(backend) and then it will execute 
-    .then(response => Response.json())
-    // data is the response from the server, which is converted to json format
+
+// --- Tasks Management ---
+
+// Load Tasks
+function loadTasks() {
+    let taskList = document.getElementById("taskList");
+    if (!taskList) return;
+
+    fetch('/api/tasks')
+    .then(response => response.json())
     .then(data => {
-        if (data.status === 'success'){
-            let tasksLists = document.getElementById("taskList");
-            let tasksHTML = " ";
-            for (let i = 0; i < data.tasks.length; i++){
-                tasksHTML += "<li>" + data.tasks[i].title + "/<li>";
-            }
-            tasksLists.innerHTML = tasksHTML;
+        if (data.status === 'success') {
+            taskList.innerHTML = '';
+            data.tasks.forEach(task => {
+                let li = document.createElement("li");
+                li.innerHTML = `
+                    <span style="text-decoration: ${task.status === 'Completed' ? 'line-through' : 'none'}">
+                        ${task.title} - ${task.status}
+                    </span>
+                    <button onclick="updateTask(${task.id}, '${task.status === 'Pending' ? 'Completed' : 'Pending'}')">Toggle Status</button>
+                    <button onclick="deleteTask(${task.id})">Delete</button>
+                `;
+                taskList.appendChild(li);
+            });
+        } else {
+            console.error(data.message);
         }
     })
-    .catch(error => console.error('Error:',error));
+    .catch(error => console.error('Error fetching tasks:', error));
 }
-getTasks();
+
+// Add Task
+let addTaskForm = document.getElementById("addTaskForm");
+if (addTaskForm) {
+    addTaskForm.addEventListener("submit", function(event) {
+        event.preventDefault();
+        let titleInput = document.getElementById("taskTitle");
+        let title = titleInput.value;
+
+        if (!title) {
+            alert("Please enter a task title");
+            return;
+        }
+
+        fetch('/api/tasks', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ title: title })
+        })
+        .then(response => response.json())
+        .then(data => {
+            alert(data.message);
+            if (data.status === 'success') {
+                titleInput.value = '';
+                loadTasks();
+            }
+        })
+        .catch(error => console.error('Error adding task:', error));
+    });
+}
+
+function updateTask(taskId, newStatus) {
+    fetch(`/api/tasks/${taskId}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ status: newStatus })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === 'success') {
+            loadTasks();
+        } else {
+            alert(data.message);
+        }
+    })
+    .catch(error => console.error('Error updating task:', error));
+}
+
+function deleteTask(taskId) {
+    if (!confirm("Are you sure you want to delete this task?")) return;
+
+    fetch(`/api/tasks/${taskId}`, {
+        method: 'DELETE'
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === 'success') {
+            loadTasks();
+        } else {
+            alert(data.message);
+        }
+    })
+    .catch(error => console.error('Error deleting task:', error));
+}
+
+// Initial load
+document.addEventListener("DOMContentLoaded", function() {
+    loadTasks();
+});
