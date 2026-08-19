@@ -55,7 +55,7 @@ lsof -i :5000
 kill -9 12345
 
 
-
+git add . && git commit -m "updates" && git push
 
 
 # SQL Basics
